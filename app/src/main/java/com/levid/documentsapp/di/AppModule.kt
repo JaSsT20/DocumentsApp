@@ -25,7 +25,7 @@ object AppModule {
     @Singleton
     fun provideDocumentsApi(moshi: Moshi): DocumentsApi {
         return Retrofit.Builder()
-            .baseUrl("https://my-json-server.typicode.com/enelramon/apimock")
+            .baseUrl("https://my-json-server.typicode.com/enelramon/apimock/")
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
             .create(DocumentsApi::class.java)

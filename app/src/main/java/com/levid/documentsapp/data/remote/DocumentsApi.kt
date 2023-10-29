@@ -5,6 +5,6 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface DocumentsApi {
-    @GET("/documentos")
+    @GET("documentos")
     suspend fun getDocuments(): List<DocumentDto>
 }
