@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -29,18 +30,31 @@ fun DocumentScreen(
     viewModel: DocumentViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
-    ) {
-        Text(
-            text = "Listado de documentos",
-            color = MaterialTheme.colorScheme.primary,
-            fontSize = MaterialTheme.typography.titleLarge.fontSize,
-            fontWeight = MaterialTheme.typography.titleLarge.fontWeight
-        )
-        DocumentsList(documents = state.documentsList)
+    if(state.isLoading){
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            CircularProgressIndicator()
+        }
+    }
+    else{
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+        ) {
+            Text(
+                text = "Listado de documentos",
+                color = MaterialTheme.colorScheme.primary,
+                fontSize = MaterialTheme.typography.titleLarge.fontSize,
+                fontWeight = MaterialTheme.typography.titleLarge.fontWeight
+            )
+            DocumentsList(documents = state.documentsList)
+        }
     }
 }
 @Composable
@@ -78,13 +92,17 @@ fun DocumentItem(document: DocumentDto){
                 .border(1.dp, MaterialTheme.colorScheme.onSurface),
         ) {
             Column(
-                modifier = Modifier.weight(1f).border(1.dp, MaterialTheme.colorScheme.onSurface),
+                modifier = Modifier
+                    .weight(1f)
+                    .border(1.dp, MaterialTheme.colorScheme.onSurface),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text("RNC: ${document.rnc}")
             }
             Column(
-                modifier = Modifier.weight(1f).border(1.dp, MaterialTheme.colorScheme.onSurface),
+                modifier = Modifier
+                    .weight(1f)
+                    .border(1.dp, MaterialTheme.colorScheme.onSurface),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text("Número: ${document.documentId}")
@@ -96,13 +114,17 @@ fun DocumentItem(document: DocumentDto){
                 .border(1.dp, MaterialTheme.colorScheme.onSurface),
         ){
             Column(
-                modifier = Modifier.weight(1f).border(1.dp, MaterialTheme.colorScheme.onSurface),
+                modifier = Modifier
+                    .weight(1f)
+                    .border(1.dp, MaterialTheme.colorScheme.onSurface),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text("Cantidad: ${document.quantity}")
             }
             Column(
-                modifier = Modifier.weight(1f).border(1.dp, MaterialTheme.colorScheme.onSurface),
+                modifier = Modifier
+                    .weight(1f)
+                    .border(1.dp, MaterialTheme.colorScheme.onSurface),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text("Monto: ${document.total}")
